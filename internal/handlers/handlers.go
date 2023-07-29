@@ -8,6 +8,7 @@ import (
 	"net/http"
 )
 
+// git check
 func Home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	log.Println("Get Home")
