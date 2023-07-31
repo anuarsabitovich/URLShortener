@@ -41,6 +41,5 @@ func GetLink(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, fmt.Sprintf("Failed to retrieve full link: %v", err), http.StatusInternalServerError)
 		return
 	}
-
-	http.Redirect(w, r, fullLink, http.StatusFound)
+	fmt.Fprintf(w, "Full link: %s", fullLink)
 }

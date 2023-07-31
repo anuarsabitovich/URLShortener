@@ -1,23 +1,24 @@
 package getlink
 
 import (
+	"fmt"
 	"net/http"
 )
 
 func GetFullLink(shortLink string) (string, error) {
 	resp, err := http.Get(shortLink)
 	if err != nil {
-		return "", err
+		fmt.Println("Error:", err)
+		return "", nil
 	}
 	defer resp.Body.Close()
 
-	if resp.StatusCode >= 300 && resp.StatusCode <= 399 {
-		location, err := resp.Location()
-		if err != nil {
-			return "", err
-		}
-		return location.String(), nil
+	// Check the response status code
+	if resp.StatusCode != http.StatusOK {
+		fmt.Println("Error: Unexpected status code", resp.StatusCode)
+		return "", nil
 	}
 
-	return shortLink, nil
+	finalURL := resp.Request.URL.String()
+	return finalURL, nil
 }
